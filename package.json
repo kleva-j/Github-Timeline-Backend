@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/kleva-j/Github-Timeline-Backend.git",
   "author": "kleva-j <kasmickleva@gmail.com>",
-  "license": "GNU GENERAL PUBLIC LICENSE",
+  "license": "MIT",
   "keywords": [
     "Github",
     "Timeline",
@@ -17,15 +17,15 @@
     "@babel/node": "^7.12.16",
     "@babel/preset-env": "^7.12.16",
     "chai": "^4.3.0",
-    "chai-http": "^4.3.0",
-		"eslint": "^7.20.0",
+    "eslint": "^7.20.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "husky": "^5.0.9",
     "mocha": "^8.3.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sinon": "^9.2.4"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -38,17 +38,20 @@
     "winston": "^3.3.3",
     "xss-clean": "^0.1.1"
   },
-	"husky": {
+	"babel" : {
+		"presets": ["@babel/preset-env"]
+	},
+  "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test",
-      "pre-push": "npm run lint && npm run test"
+      "pre-commit": "yarn lint && yarn test",
+      "pre-push": "yarn lint && yarn test"
     }
   },
   "scripts": {
-		"start": "node dist/index",
+    "start": "node dist/index",
     "dev": "nodemon --exec babel-node ./index.js",
-		"build": "rm -rf dist && babel ./ -d ./dist --copy-files --ignore ./node_modules",
-		"postinstall": "npm run build",
-		"lint": "eslint . --ext .js"
+    "build": "rm -rf dist && babel . -d dist/ --ignore node_modules",
+    "postinstall": "yarn build",
+    "lint": "eslint . --ext .js"
   }
 }

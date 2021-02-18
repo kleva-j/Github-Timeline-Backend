@@ -10,10 +10,14 @@ process.on('uncaughtException', (err) => {
 	process.exit(1);
 });
 
-const { listen } = app;
-
 const port = process.env.PORT || 3000;
-const server = listen(port, () => log('Server is running 🚀'));
+const server = app.listen(port, () =>
+	log(
+		`Server is running in ${process.env.NODE_ENV} 🚀 on port ${
+			server.address().port
+		}`,
+	),
+);
 
 process.on('unhandledRejection', (err) => {
 	error('UNHANDLED REJECTION 💥 Shutting down server...');
