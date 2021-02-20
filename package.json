@@ -60,10 +60,10 @@
 		}
 	},
 	"scripts": {
-		"start": "node dist/index",
-		"start:dev": "node -r esm index.js",
+		"start:dev": "node dist/index",
+		"start": "node -r esm index.js",
 		"dev": "nodemon --exec babel-node ./index.js",
-		"build": "rm -rf dist && babel . -d dist/ --ignore node_modules",
+		"build:dev": "rm -rf dist && babel . -d dist/ --ignore node_modules",
 		"lint": "eslint . --ext .js",
 		"test": "cross-env NODE_ENV=test mocha __test__/index.spec.js --timeout=20000 --require esm"
 	}
