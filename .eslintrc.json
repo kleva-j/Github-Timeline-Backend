@@ -1,6 +1,6 @@
 {
 	"globals": {
-		"process": true,
+		"process": true
 	},
 	"env": {
 		"node": true,
