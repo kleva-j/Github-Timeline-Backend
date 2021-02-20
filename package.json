@@ -1,57 +1,70 @@
 {
-  "name": "Github-Timeline-Backend",
-  "description": "A simple Node app built on Express, instantly up and running.",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/kleva-j/Github-Timeline-Backend.git",
-  "author": "kleva-j <kasmickleva@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "Github",
-    "Timeline",
-    "API"
-  ],
-  "devDependencies": {
-    "@babel/cli": "^7.12.16",
-    "@babel/core": "^7.12.16",
-    "@babel/node": "^7.12.16",
-    "@babel/preset-env": "^7.12.16",
-    "chai": "^4.3.0",
-    "eslint": "^7.20.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "husky": "^5.0.9",
-    "mocha": "^8.3.0",
-    "nodemon": "^2.0.7",
-    "sinon": "^9.2.4"
-  },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "helmet": "^4.4.1",
-    "morgan": "^1.10.0",
-    "winston": "^3.3.3",
-    "xss-clean": "^0.1.1"
-  },
-	"babel" : {
-		"presets": ["@babel/preset-env"]
+	"name": "Github-Timeline-Backend",
+	"description": "A simple Node app built on Express, instantly up and running.",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/kleva-j/Github-Timeline-Backend.git",
+	"author": "kleva-j <kasmickleva@gmail.com>",
+	"license": "MIT",
+	"keywords": [
+		"Github",
+		"Timeline",
+		"API"
+	],
+	"engines": {
+		"node": "15.x"
 	},
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint && yarn test",
-      "pre-push": "yarn lint && yarn test"
-    }
-  },
-  "scripts": {
-    "start": "node dist/index",
-    "dev": "nodemon --exec babel-node ./index.js",
-    "build": "rm -rf dist && babel . -d dist/ --ignore node_modules",
-    "postinstall": "yarn build",
-    "lint": "eslint . --ext .js"
-  }
+	"devDependencies": {
+		"@babel/cli": "^7.12.16",
+		"@babel/core": "^7.12.16",
+		"@babel/node": "^7.12.16",
+		"@babel/preset-env": "^7.12.16",
+		"chai": "^4.3.0",
+		"chai-http": "^4.3.0",
+		"cross-env": "^7.0.3",
+		"eslint": "^7.20.0",
+		"eslint-config-standard": "^16.0.2",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.3.1",
+		"husky": "^5.0.9",
+		"mocha": "^8.3.0",
+		"nodemon": "^2.0.7",
+		"sinon": "^9.2.4"
+	},
+	"dependencies": {
+		"axios": "^0.21.1",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
+		"dotenv": "^8.2.0",
+		"esm": "^3.2.25",
+		"express": "^4.17.1",
+		"helmet": "^4.4.1",
+		"morgan": "^1.10.0",
+		"winston": "^3.3.3",
+		"xss-clean": "^0.1.1"
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-env"
+		],
+		"ignore": [
+			"node_modules",
+			"__test__"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn lint && yarn test",
+			"pre-push": "yarn lint && yarn test"
+		}
+	},
+	"scripts": {
+		"start": "node dist/index",
+		"start:dev": "node -r esm index.js",
+		"dev": "nodemon --exec babel-node ./index.js",
+		"build": "rm -rf dist && babel . -d dist/ --ignore node_modules",
+		"lint": "eslint . --ext .js",
+		"test": "cross-env NODE_ENV=test mocha __test__/index.spec.js --timeout=20000 --require esm"
+	}
 }
