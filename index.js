@@ -1,5 +1,4 @@
 import 'dotenv/config';
-// dotenv.config({ path: path.resolve(__dirname, `../config/${process.env.ENVIRONMENT}.env`)});
 
 import app from './app';
 
