@@ -6,7 +6,8 @@
 		"node": true,
 		"browser": true,
 		"es2021": true,
-		"commonjs": true
+		"commonjs": true,
+		"mocha": true
 	},
 	"extends": "eslint:recommended",
 	"parserOptions": {
@@ -17,6 +18,7 @@
 		"indent": ["error", "tab"],
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "single"],
-		"semi": ["error", "always"]
+		"semi": ["error", "always"],
+		"no-useless-catch": ["error", "0"]
 	}
 }

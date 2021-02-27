@@ -29,3 +29,5 @@ process.on('SIGTERM', () => {
 	log('SIGTERM SIGNAL RECEIVED 👋 Shutting down gracefully...');
 	server.close(() => log('💥 Process terminated!'));
 });
+
+export default server;
