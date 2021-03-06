@@ -11,7 +11,8 @@ describe('/GET *', () => {
 		chai
 			.request(server)
 			.get('/')
-			.end((_err, res) => {
+			.end((err, res) => {
+				if (err) return done(err);
 				res.should.have.status(200);
 				res.body.should.be.a('object');
 				res.text.should.be.a('string');

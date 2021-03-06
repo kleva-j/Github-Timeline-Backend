@@ -24,3 +24,8 @@ jobs:
     - run: npm test
     env:
       GITHUB_JOBS_API: https://jobs.github.com/positions
+      AUTH_SECRET: TEST+>SESSION+>SECRET
+      ACCESS_TOKEN_URL: https://github.com/login/oauth/access_token
+      REDIRECT_URL: https://github.com/login/oauth/authorize?
+      GITHUB_CLIENT_ID: github_client_id
+      CALLBACK_URL: CALLBACK_URL
