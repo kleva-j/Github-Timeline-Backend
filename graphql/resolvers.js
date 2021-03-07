@@ -1,11 +1,11 @@
-import { get } from 'axios';
+import axios from 'axios';
 
 const API_URL = process.env.GITHUB_JOBS_API;
 
 export async function jobs() {
 	try {
-		const allJobs = await get(`${API_URL}.json`);		
-		return allJobs.data.map((job) => ({
+		const { data } = await axios.get(`${API_URL}.json`);
+		return data.map((job) => ({
 			id: job.id,
 			title: job.title,
 			type: job.type,
@@ -22,7 +22,7 @@ export async function jobs() {
 
 export async function job(req, _res) {
 	try {
-		const { data } = await get(`${API_URL}/${req.id}.json`);
+		const { data } = await axios.get(`${API_URL}/${req.id}.json`);
 		return {
 			id: data.id,
 			title: data.title,

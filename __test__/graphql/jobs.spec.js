@@ -19,18 +19,13 @@ const job = {
 	created_at: 'Wed Feb 17 20:07:40 UTC 2021',
 };
 
-const result = {
-	joblist: { data: { jobs: [job] } },
-	singleJob: { data: { job } },
-};
-
 describe('GraphQL', () => {
 	let sandbox;
 	beforeEach(() => (sandbox = sinon.createSandbox()));
 	afterEach(() => sandbox.restore());
 
 	it('it should return fetched jobs', (done) => {
-		const resolved = new Promise((r) => r({ ...result.joblistb }));
+		const resolved = new Promise((r) => r({ data: [job] }));
 		sandbox.stub(axios, 'get').returns(resolved);
 
 		chai
@@ -48,12 +43,16 @@ describe('GraphQL', () => {
 				expect(res.body).to.haveOwnProperty('data');
 				expect(res.body['data']).to.haveOwnProperty('jobs');
 				expect(res.body['data']['jobs']).to.be.a('array');
+				expect(res.body.data.jobs[0].id).to.equal(job.id);
+				expect(res.body.data.jobs[0].title).to.equal(job.title);
+				expect(res.body.data.jobs[0].type).to.equal(job.type);
+				expect(res.body.data.jobs[0].company).to.equal(job.company);
 				done();
 			});
 	});
 
 	it('it should return job with the id of XXXX', (done) => {
-		const resolved = new Promise((r) => r({ ...result.singleJob }));
+		const resolved = new Promise((r) => r({ data: job }));
 		sandbox.stub(axios, 'get').returns(resolved);
 
 		chai
@@ -71,6 +70,10 @@ describe('GraphQL', () => {
 				expect(res.body).to.haveOwnProperty('data');
 				expect(res.body.data).to.haveOwnProperty('job');
 				expect(res.body['data']['job']).to.be.a('object');
+				expect(res.body.data.job.id).to.equal(job.id);
+				expect(res.body.data.job.title).to.equal(job.title);
+				expect(res.body.data.job.type).to.equal(job.type);
+				expect(res.body.data.job.company).to.equal(job.company);
 				done();
 			});
 	});
