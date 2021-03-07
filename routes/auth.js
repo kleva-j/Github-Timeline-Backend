@@ -6,11 +6,7 @@ const AuthRoutes = Router();
 
 export const redirectUrl = `${process.env.REDIRECT_URL}client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.CALLBACK_URL}`;
 
-export const handleRedirect = (req, res) => {
-	const { user } = req.session;
-	if (user) res.redirect('/');
-	else res.redirect(redirectUrl);
-};
+export const handleRedirect = (req, res) => res.redirect(redirectUrl);
 
 export const handleCallback = async (req, res) => {
 	const { code } = req.query;
