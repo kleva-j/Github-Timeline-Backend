@@ -9,17 +9,31 @@ export const redirectUrl = `${process.env.REDIRECT_URL}client_id=${process.env.G
 export const handleRedirect = (req, res) => res.redirect(redirectUrl);
 
 export const handleCallback = async (req, res) => {
-	const { code } = req.query;
-	const { token, refresh_token, expires_in: expires } = await getAccessToken({
-		code,
-		client_id: process.env.GITHUB_CLIENT_ID,
-		client_secret: process.env.GITHUB_CLIENT_SECRET,
-	});
-	if (token) {
-		req.session.user = { token, refresh_token, expires };
+	const { code, error, error_description } = req.query;
+	if (error && error === 'redirect_uri_mismatch') {
+		return res.status(401).send(`
+			<div style="text-align:center; margin-top: 100px;">
+				<h1>Incomplete Login process</h1>
+				<h3>Error: <strong style="color: red;">${error_description}</strong> </h3>
+				<p>In order to Login you are required to accept access to your Github repo details.</p>
+				<p>
+					<a href="${process.env.LOGIN_CALLBACK_REDIRECT_URL}">Go back here</a>
+				</p>
+			</div>
+		`);
 	}
-	console.log(req.baseUrl)
-	res.status(200).redirect(process.env.LOGIN_CALLBACK_REDIRECT_URL);
+	if (code) {
+		const { token, refresh_token, expires_in: expires } = await getAccessToken({
+			code,
+			client_id: process.env.GITHUB_CLIENT_ID,
+			client_secret: process.env.GITHUB_CLIENT_SECRET,
+		});
+		if (token) {
+			req.session.user = { token, refresh_token, expires };
+		}
+		console.log(req.baseUrl);
+		res.status(200).redirect(process.env.LOGIN_CALLBACK_REDIRECT_URL);
+	}
 };
 
 export const validateUserSession = (req, res) => {

@@ -1,5 +1,6 @@
 import { graphqlHTTP } from 'express-graphql';
 import express, { json } from 'express';
+import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import compression from 'compression';
 import xss from 'xss-clean';
@@ -26,10 +27,17 @@ app
 			secret: process.env.AUTH_SECRET,
 			saveUninitialized: false,
 			resave: false,
+			store: MongoStore.create({
+				mongoUrl: process.env.MONGODB_CONNECT_STORE,
+				mongoOptions: {
+					useNewUrlParser: true,
+					useUnifiedTopology: true,
+				},
+			}),
 			cookie: {
 				maxAge: 8 * 3600,
 				sameSite: 'lax',
-				secure: process.env.NODE_ENV === 'production',
+				secure: false,
 			},
 		}),
 	)
