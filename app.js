@@ -28,7 +28,8 @@ app
 			resave: false,
 			cookie: {
 				maxAge: 8 * 3600,
-				sameSite: 'strict',
+				sameSite: 'lax',
+				secure: process.env.NODE_ENV === 'production',
 			},
 		}),
 	)
