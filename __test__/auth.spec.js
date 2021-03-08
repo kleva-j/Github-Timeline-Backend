@@ -3,11 +3,11 @@ import axios from 'axios';
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 
-chai.should();
-chai.use(chaiHttp);
-
 import { handleRedirect, handleCallback, redirectUrl } from '../routes/auth';
 import server from '../index.js';
+
+chai.should();
+chai.use(chaiHttp);
 
 const result = {
 	data: {
@@ -32,6 +32,24 @@ describe('Auth', function () {
 			const res = { status: () => res, redirect: sinon.spy() };
 			handleCallback(req, res).then(() => {
 				expect(res.status().redirect.calledOnce).to.be.true;
+			});
+			done();
+		});
+	});
+
+	describe('/GET /login/github/callback with error', () => {
+		let sandbox;
+		beforeEach(() => (sandbox = sinon.createSandbox()));
+		afterEach(() => sandbox.restore());
+
+		it('it should handle the login callback', (done) => {
+			const req = {
+				query: { error: 'redirect_uri_mismatch', error_description: 'Access denied' },
+				session: {},
+			};
+			const res = { status: () => res, send: sinon.spy() };
+			handleCallback(req, res).then(() => {
+				expect(res.status().send.calledOnce).to.be.true;
 			});
 			done();
 		});
@@ -76,7 +94,7 @@ describe('Auth', function () {
 			sandbox.stub(axios, 'post').returns(resolved);
 			chai
 				.request(server)
-				.get('/login/github/callback')
+				.get('/login/github/callback?code=XXXX')
 				.end((err, res) => {
 					if (err) return done(err);
 					expect(res.status).to.equal(200);
