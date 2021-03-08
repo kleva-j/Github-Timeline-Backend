@@ -29,3 +29,4 @@ jobs:
       REDIRECT_URL: https://github.com/login/oauth/authorize?
       GITHUB_CLIENT_ID: github_client_id
       CALLBACK_URL: CALLBACK_URL
+      MONGODB_CONNECT_STORE: mongodb+srv://DevCode:MzbZ6zxIywSDp5iw@cluster0.pqfii.mongodb.net/session-store?retryWrites=true&w=majority
