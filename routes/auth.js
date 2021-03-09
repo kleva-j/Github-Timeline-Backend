@@ -31,7 +31,6 @@ export const handleCallback = async (req, res) => {
 		if (token) {
 			req.session.user = { token, refresh_token, expires };
 		}
-		console.log(req.baseUrl);
 		res.status(200).redirect(process.env.LOGIN_CALLBACK_REDIRECT_URL);
 	}
 };
