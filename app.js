@@ -37,7 +37,7 @@ app
 				},
 			}),
 			cookie: {
-				maxAge: 8 * 3600,
+				maxAge:  8 * 3600 * 1000,
 				sameSite: 'strict',
 				secure: process.env.NODE_ENV === 'production',
 			},
