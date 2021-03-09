@@ -7,6 +7,7 @@ import xss from 'xss-clean';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import path from 'path';
 
 import Router from './routes';
 import graphqlSchema from './graphql/schema';
@@ -21,6 +22,7 @@ app
 	.use(cors())
 	.options('*', cors())
 	.use(xss())
+	.use(express.static(path.join(__dirname, 'build')))
 	.use(
 		session({
 			name: 'Gitline-sid',
@@ -36,8 +38,8 @@ app
 			}),
 			cookie: {
 				maxAge: 8 * 3600,
-				sameSite: 'lax',
-				secure: false,
+				sameSite: 'strict',
+				secure: process.env.NODE_ENV === 'production',
 			},
 		}),
 	)
@@ -53,7 +55,7 @@ app
 		}),
 	)
 	.get('*', (_req, res) =>
-		res.status(200).send('Welcome to Github Timeline API.'),
+		res.sendFile(path.join(__dirname, 'build', 'index.html')),
 	);
 
 export default app;
