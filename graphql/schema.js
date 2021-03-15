@@ -3,17 +3,20 @@ import { buildSchema } from 'graphql';
 export default buildSchema(`
   type Job {
     id: ID!
-    title: String!
-    type: String!
-    company: String!
-    description: String!
     url: String!
+    type: String!
+    title: String!
+    company: String!
     location: String!
     created_at: String!
+    description: String!
+		company_url: String!
+		company_logo: String!
+		how_to_apply: String!
   }
 
   type Query {
-    jobs:[Job!]
+    jobs(page: Int, description: String, location: String, full_time: String): [Job!]!
     job(id: ID!): Job!
   }
 

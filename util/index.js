@@ -28,6 +28,15 @@ export const getAccessToken = async (payload) => {
 	}
 };
 
+export const setQueryParams = (params) => {
+	let qp = '?';
+	for (const [key, value] of Object.entries(params)) {
+		qp = qp + `&${key}=${value}`;
+	}
+	return qp;
+};
+
 export default {
 	getAccessToken,
+	setQueryParams,
 };
