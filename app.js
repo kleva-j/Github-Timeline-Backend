@@ -18,7 +18,14 @@ const app = express();
 app
 	.use(morgan('combined'))
 	.enable('trust proxy')
-	.use(helmet())
+	.use(
+		helmet.contentSecurityPolicy({
+			directives: {
+				...helmet.contentSecurityPolicy.getDefaultDirectives(),
+				'img-src': ["'self'", 'data:', 'https:'],
+			},
+		}),
+	)
 	.use(cors())
 	.options('*', cors())
 	.use(xss())
@@ -37,7 +44,7 @@ app
 				},
 			}),
 			cookie: {
-				maxAge:  8 * 3600 * 1000,
+				maxAge: 8 * 3600 * 1000,
 				sameSite: 'strict',
 				secure: process.env.NODE_ENV === 'production',
 			},
